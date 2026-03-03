@@ -1,39 +1,39 @@
 import createHttpError from 'http-errors';
 import { Types } from 'mongoose';
 import { Reviews, ReviewsCollection } from '../database/models/reviews.js';
-import { TeachersCollection } from '../database/models/teachers.js';
+import { NannyCollection } from '../database/models/nannys.js';
 
-type CreateReviewInput = Omit<Reviews, 'teacherId'> & { teacherId?: string };
+type CreateReviewInput = Omit<Reviews, 'nannyId'> & { nannyId?: string };
 
 export const getAllReviews = async () => {
   return await ReviewsCollection.find();
 };
 
-export const getReviewsByTeacherId = async (teacherId: string) => {
-  return await ReviewsCollection.find({ teacherId });
+export const getReviewsByNannyId = async (nannyId: string) => {
+  return await ReviewsCollection.find({ nannyId });
 };
 
 export const getReviewById = async (reviewId: string) => {
   return await ReviewsCollection.findById(reviewId);
 };
 
-export const createReviewsForTeacher = async (
-  teacherId: string,
+export const createReviewsForNanny = async (
+  nannyId: string,
   payload: CreateReviewInput | CreateReviewInput[],
 ) => {
-  if (!Types.ObjectId.isValid(teacherId)) {
-    throw createHttpError(400, 'Invalid teacher id');
+  if (!Types.ObjectId.isValid(nannyId)) {
+    throw createHttpError(400, 'Invalid nanny id');
   }
 
-  const teacher = await TeachersCollection.findById(teacherId);
-  if (!teacher) {
-    throw createHttpError(404, 'Teacher not found');
+  const nanny = await NannyCollection.findById(nannyId);
+  if (!nanny) {
+    throw createHttpError(404, 'Nanny not found');
   }
 
   if (Array.isArray(payload)) {
     const normalizedPayload = payload.map(review => ({
       ...review,
-      teacherId,
+      nannyId,
     }));
 
     return await ReviewsCollection.insertMany(normalizedPayload);
@@ -41,7 +41,7 @@ export const createReviewsForTeacher = async (
 
   return await ReviewsCollection.create({
     ...payload,
-    teacherId,
+    nannyId,
   });
 };
 

@@ -8,6 +8,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 
 import router from './routes/index.js';
 import { requestLogger } from './middlewares/requestLogger.js';
+import ServerlessHttp from 'serverless-http';
 
 const app = express();
 
@@ -33,7 +34,7 @@ app.use(errorHandler);
 printRoutes(app);
 
 const PORT = process.env.PORT || 3001;
-
+export const handler = ServerlessHttp(app);
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

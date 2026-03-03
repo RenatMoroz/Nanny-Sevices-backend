@@ -1,10 +1,11 @@
-service: aws-node-express-api
+service: nanny-app-backend-api
 
 frameworkVersion: '4'
 
 provider:
   name: aws
   runtime: nodejs22.x
+  profile: defaultUser
 
 custom:
   prune: # автоматичне видалення старих версій

@@ -11,10 +11,10 @@ export const getAllReviews: RequestHandler = async (_req, res, next) => {
   }
 };
 
-export const getReviewsByTeacherId: RequestHandler = async (req, res, next) => {
+export const getReviewsByNannyId: RequestHandler = async (req, res, next) => {
   try {
-    const teacherId = req.params.teacherId;
-    const result = await services.getReviewsByTeacherId(teacherId);
+    const nannyId = req.params.nannyId;
+    const result = await services.getReviewsByNannyId(nannyId);
     res.status(200).json(result);
   } catch (err) {
     next(err);
@@ -36,14 +36,14 @@ export const getReviewById: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const createReviewsForTeacher: RequestHandler = async (
+export const createReviewsForNanny: RequestHandler = async (
   req,
   res,
   next,
 ) => {
   try {
-    const teacherId = req.params.teacherId;
-    const result = await services.createReviewsForTeacher(teacherId, req.body);
+    const nannyId = req.params.nannyId;
+    const result = await services.createReviewsForNanny(nannyId, req.body);
     res.status(201).json(result);
   } catch (err) {
     next(err);

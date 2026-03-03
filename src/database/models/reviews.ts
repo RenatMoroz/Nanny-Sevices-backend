@@ -2,11 +2,11 @@ import { HydratedDocument, InferSchemaType, model, Schema } from 'mongoose';
 
 const reviewsSchema = new Schema(
   {
-    reviewer_name: {
+    reviewer: {
       type: String,
       required: true,
     },
-    reviewer_rating: {
+    rating: {
       type: Number,
       required: true,
     },
@@ -14,9 +14,9 @@ const reviewsSchema = new Schema(
       type: String,
       required: true,
     },
-    teacherId: {
+    nannyId: {
       type: Schema.Types.ObjectId,
-      ref: 'teachers',
+      ref: 'Nanny',
       required: true,
     },
   },
